@@ -5,6 +5,9 @@ public class Journal
 {
     public int response;
 
+    public string promptResponse;
+    List<Entry> myJournalList = new List<Entry>();
+    
     private List<string> entries = new List<string>
         {
             "Who was the most interesting person I met today?",
@@ -28,7 +31,55 @@ public class Journal
     {
         if(response == 1)
         {
-              Console.WriteLine($"{GetRandomPrompt()}");
+            string currentPrompt = GetRandomPrompt();
+            Console.WriteLine($"{currentPrompt}");
+            promptResponse = Console.ReadLine();
+            
+            Entry todayForm = new Entry();
+
+            todayForm.date = DateTime.Now.ToShortDateString();
+            todayForm.promptText = currentPrompt;
+            todayForm.entryText = promptResponse;
+            myJournalList.Add(todayForm);
+
+        }
+        
+        if(response == 2)
+        {
+            DisplayAll();
+        }
+        
+        if(response == 3)
+        {
+            
+        }
+
+        if(response == 4)
+        {
+            SaveToFile();
+            Console.WriteLine("Journal Succesfully Saved");
+        }
+    }
+
+    public void DisplayAll()
+    {
+        foreach(Entry currentEntry in myJournalList)
+        {
+            currentEntry.Display();
+        }
+    }
+
+    public void SaveToFile()
+    {
+        Console.WriteLine("What shall the name of the File be?");
+        string filename = Console.ReadLine();
+
+        using(StreamWriter writer = new StreamWriter(filename))
+        {
+            foreach(Entry currentEntry in myJournalList)
+            {
+                writer.WriteLine($"{currentEntry.date}|{currentEntry.promptText}|{currentEntry.entryText}");
+            }
         }
     }
     public string GetRandomPrompt()
