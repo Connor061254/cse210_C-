@@ -8,7 +8,7 @@ public class Journal
     public string promptResponse;
     List<Entry> myJournalList = new List<Entry>();
     
-    private List<string> entries = new List<string>
+    private List<string> prompts = new List<string>
         {
             "Who was the most interesting person I met today?",
             "What was the best part of my day?",
@@ -41,7 +41,6 @@ public class Journal
             todayForm.promptText = currentPrompt;
             todayForm.entryText = promptResponse;
             myJournalList.Add(todayForm);
-
         }
         
         if(response == 2)
@@ -51,7 +50,7 @@ public class Journal
         
         if(response == 3)
         {
-            
+            LoadFile();
         }
 
         if(response == 4)
@@ -71,7 +70,7 @@ public class Journal
 
     public void SaveToFile()
     {
-        Console.WriteLine("What shall the name of the File be?");
+        Console.WriteLine("What is the filename? ");
         string filename = Console.ReadLine();
 
         using(StreamWriter writer = new StreamWriter(filename))
@@ -82,10 +81,36 @@ public class Journal
             }
         }
     }
+
+    public void LoadFile()
+    {
+        Console.WriteLine("What is the filename? ");
+        string filename = Console.ReadLine();
+
+        myJournalList.Clear();  
+
+        using(StreamReader reader = new StreamReader(filename))
+        {
+            string line;
+
+            while ((line = reader.ReadLine()) != null)
+            {
+                string[] parts = line.Split("|");
+
+                Entry loadedEntry = new Entry();
+
+                loadedEntry.date = parts[0];
+                loadedEntry.promptText = parts[1];
+                loadedEntry.entryText = parts[2];
+
+                myJournalList.Add(loadedEntry);
+            }
+        }
+    }
     public string GetRandomPrompt()
     {
         Random random = new Random();
-        int index = random.Next(entries.Count);
-        return entries[index];
+        int index = random.Next(prompts.Count);
+        return prompts[index];
     }
 }
