@@ -2,8 +2,12 @@ using System;
 
 class Program
 {
+    private static int healthAmount;
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello Learning03 World!");
+        Fraction fraction = new Fraction();
+
+        fraction.health = 90;
+        
     }
 }
