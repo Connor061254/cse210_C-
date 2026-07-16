@@ -7,6 +7,7 @@ class Program
     {
         Inventory inventory = new Inventory();
         Shop shop = new Shop();
+        LootBox lootBox = new LootBox();
         while (_isLooping == true)
         {
              Console.WriteLine("""
@@ -29,7 +30,8 @@ class Program
                 break;
 
                 case 2:
-
+                Console.Clear();
+                lootBox.showLootbox();
                 break;
 
                 case 3:
@@ -38,15 +40,23 @@ class Program
                 break;
 
                 case 4:
-                
+                Console.WriteLine("what is the filename you would like to save it too?");
+                string filename = Console.ReadLine();
+                inventory.SaveInventory(filename);
                 break;
 
-                case 5: 
-
+                case 5:
+                Console.WriteLine("What is the filename to load too?");
+                string LFilename = Console.ReadLine();
+                inventory.LoadInventory(LFilename);
                 break;
 
                 case 6:
                 _isLooping = false;
+                break;
+                // for testing
+                case 7:
+                inventory._coins += 10000;
                 break;
             }
         }

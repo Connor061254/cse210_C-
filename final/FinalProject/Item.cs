@@ -26,6 +26,6 @@ public class Item
 
     public override string ToString()
     {
-        return $"{_itemName} {_rarity} {_value}";
+        return $"{_itemName} {_rarity} {_value} Gold";
     }
 }

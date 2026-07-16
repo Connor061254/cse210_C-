@@ -1,6 +1,6 @@
 public class LootBox
 {
-    List<Item> AllItems = new List<Item>
+    public List<Item> AllItems = new List<Item>
     {
         new Item("BrokenStick", 2, Rarity.Common),
         new Item("RippedPage", 4, Rarity.Common),
@@ -49,5 +49,42 @@ public class LootBox
         Random random = new Random();
         int index = random.Next(AllItems.Count);
         return AllItems[index];
+    }
+
+    public Item GetRarityItem(Rarity TargetRarity)
+    {
+        List<Item> matchingItems = AllItems.FindAll(item => item._rarity == TargetRarity);
+
+        if(matchingItems.Count == 0)
+        {
+            return null;
+        }
+
+        Random random = new Random();
+        int index = random.Next(matchingItems.Count);
+        return matchingItems[index];
+    }
+
+    public void showLootbox()
+    {
+        Console.WriteLine("""
+        Drop Chances:
+
+        Common: Drop Chance 40%
+        Uncommon: Drop Chance 28.57%
+        Rare: Drop Chance 14.29%
+        Epic: Drop Chance 8.57%
+        Legendary: Drop Chance 5.71%
+        Mythic: Drop Chance 2.86%
+        """);
+        Console.WriteLine(" ");
+        Console.WriteLine("Available items:");
+        int n = 1;
+        for(int i = 0; i < AllItems.Count; i++)
+        {
+            Console.WriteLine($"{n}. {AllItems[i]}");
+            n++;
+        }
+        Console.WriteLine(" ");
     }
 }
