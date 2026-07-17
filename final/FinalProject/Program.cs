@@ -8,47 +8,49 @@ class Program
         Inventory inventory = new Inventory();
         Shop shop = new Shop();
         LootBox lootBox = new LootBox();
+        SaveSystem saveSystem = new SaveSystem();
+        Player player = new Player("Hero", 1500);
         while (_isLooping == true)
         {
-             Console.WriteLine("""
-            Please select one of the options below:
-        
-            1. Shop
-            2. Lootbox
-            3. Inventory
-            4. Save
-            5. Load
-            6. Quit
-            """);
-
-            int response = int.Parse(Console.ReadLine());
+            Console.Clear();
+            Menu.DisplayHeader("LootBox RPG");
+            Menu.DisplayMainMenu();
+            int response = Menu.GetNumberInput("Enter your choice: ");
 
             switch (response)
             {
                 case 1:
-                shop.Welcome(inventory);
+                shop.Welcome(player);
                 break;
 
                 case 2:
                 Console.Clear();
                 lootBox.showLootbox();
+                Console.WriteLine("\nPress Enter to return to the main menu");
+                Console.ReadLine();
                 break;
 
                 case 3:
                 Console.Clear();
-                inventory.DisplayInventory();
+                inventory.DisplayInventory(player);
+                Console.WriteLine("\nPress Enter to return to the main menu");
+                Console.ReadLine();
                 break;
 
                 case 4:
                 Console.WriteLine("what is the filename you would like to save it too?");
                 string filename = Console.ReadLine();
-                inventory.SaveInventory(filename);
+                saveSystem.SaveInventory(inventory, filename, player);
+                Console.WriteLine("\nPress Enter to return to the main menu");
+                Console.ReadLine();
                 break;
 
                 case 5:
                 Console.WriteLine("What is the filename to load too?");
                 string LFilename = Console.ReadLine();
-                inventory.LoadInventory(LFilename);
+                saveSystem.LoadInventory(inventory, LFilename, player);
+                Console.WriteLine("\nPress Enter to return to the main menu");
+                Console.ReadLine();
                 break;
 
                 case 6:
@@ -56,7 +58,7 @@ class Program
                 break;
                 // for testing
                 case 7:
-                inventory._coins += 10000;
+                player._gold += 10000;
                 break;
             }
         }
